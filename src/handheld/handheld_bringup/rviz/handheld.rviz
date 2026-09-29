@@ -1,0 +1,139 @@
+# 阶段 1/2/4 实时与 Point-LIO 回放：固定帧 camera_init（Point-LIO 世界系）。
+# Laser_map 仅在 save_pcd:=true（pcd_save_en）时以 1 Hz 发布累积地图。
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Reference Frame: <Fixed Frame>
+      Cell Size: 1
+      Plane Cell Count: 40
+      Color: 160; 160; 164
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Show Names: true
+      Show Arrows: false
+      Marker Scale: 0.5
+    - Class: rviz_default_plugins/PointCloud2
+      Name: cloud_registered（当前帧，世界系）
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /cloud_registered
+      Style: Points
+      Size (Pixels): 2
+      Size (m): 0.03
+      Alpha: 1.0
+      Decay Time: 10
+      Position Transformer: XYZ
+      Color Transformer: Intensity
+      Use rainbow: true
+      Invert Rainbow: false
+      Autocompute Intensity Bounds: true
+    - Class: rviz_default_plugins/Odometry
+      Name: aft_mapped_to_init（当前位姿）
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /aft_mapped_to_init
+      Keep: 1
+      Position Tolerance: 0.1
+      Angle Tolerance: 0.1
+      Shape:
+        Value: Axes
+        Axes Length: 0.5
+        Axes Radius: 0.05
+      Covariance:
+        Value: false
+    - Class: rviz_default_plugins/Path
+      Name: path（轨迹）
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /path
+      Color: 25; 255; 0
+      Line Style: Lines
+      Alpha: 1
+    - Class: rviz_default_plugins/PointCloud2
+      Name: cloud_registered_body（机体系）
+      Enabled: false
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /cloud_registered_body
+      Style: Points
+      Size (Pixels): 2
+      Size (m): 0.03
+      Alpha: 1.0
+      Decay Time: 0
+      Position Transformer: XYZ
+      Color Transformer: Intensity
+      Use rainbow: true
+      Invert Rainbow: false
+      Autocompute Intensity Bounds: true
+    - Class: rviz_default_plugins/PointCloud2
+      Name: Laser_map（累积地图）
+      Enabled: false
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /Laser_map
+      Style: Points
+      Size (Pixels): 1
+      Size (m): 0.03
+      Alpha: 1.0
+      Decay Time: 0
+      Position Transformer: XYZ
+      Color Transformer: AxisColor
+      Use rainbow: true
+      Invert Rainbow: false
+      Autocompute Intensity Bounds: true
+      Axis: Z
+      Use Fixed Frame: true
+  Enabled: true
+  Global Options:
+    Fixed Frame: camera_init
+    Background Color: 48; 48; 48
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+    - Class: rviz_default_plugins/PublishPoint
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 25
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Pitch: 0.8
+      Yaw: 3.9
+      Target Frame: <Fixed Frame>
+Window Geometry:
+  Height: 900
+  Width: 1500

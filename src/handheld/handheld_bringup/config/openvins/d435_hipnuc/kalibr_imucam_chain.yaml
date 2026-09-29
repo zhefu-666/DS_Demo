@@ -1,0 +1,36 @@
+%YAML:1.0
+# D435 红外双目（image_rect_raw 已校正，畸变为 0）与 HIPNUC IMU 的外参。
+# 全部为占位值，必须用 Kalibr（camera + imu-camera 标定）替换：
+#   - intrinsics：可先用 ros2 topic echo /camera/camera/infra1/camera_info 的 K 填 [fx, fy, cx, cy]
+#   - T_cam_imu：IMU -> 相机光学系。占位假设 IMU x前 y左 z上、相机光学系 z前 x右 y下、原点重合
+#   - cam1 与 cam0 相差 D435 基线约 50 mm（infra2 在 infra1 右侧）
+#   - timeshift_cam_imu：HIPNUC 为主机接收时间戳，相机为 global time，需 Kalibr 估计
+
+cam0:
+  T_cam_imu:
+    - [0.0, -1.0,  0.0, 0.0]
+    - [0.0,  0.0, -1.0, 0.0]
+    - [1.0,  0.0,  0.0, 0.0]
+    - [0.0,  0.0,  0.0, 1.0]
+  cam_overlaps: [1]
+  camera_model: pinhole
+  distortion_coeffs: [0.0, 0.0, 0.0, 0.0]
+  distortion_model: radtan
+  intrinsics: [425.0, 425.0, 424.0, 240.0]   # TODO camera_info
+  resolution: [848, 480]
+  rostopic: /camera/camera/infra1/image_rect_raw
+  timeshift_cam_imu: 0.0
+cam1:
+  T_cam_imu:
+    - [0.0, -1.0,  0.0, -0.050]
+    - [0.0,  0.0, -1.0,  0.0]
+    - [1.0,  0.0,  0.0,  0.0]
+    - [0.0,  0.0,  0.0,  1.0]
+  cam_overlaps: [0]
+  camera_model: pinhole
+  distortion_coeffs: [0.0, 0.0, 0.0, 0.0]
+  distortion_model: radtan
+  intrinsics: [425.0, 425.0, 424.0, 240.0]   # TODO camera_info
+  resolution: [848, 480]
+  rostopic: /camera/camera/infra2/image_rect_raw
+  timeshift_cam_imu: 0.0

@@ -1,0 +1,7 @@
+# 阶段 1 原始数据（必录）+ 在线输出（可选，回放可复现）
+/livox/lidar
+/livox/imu
+/aft_mapped_to_init
+/path
+/tf
+/tf_static

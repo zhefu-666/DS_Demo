@@ -1,0 +1,11 @@
+# 阶段 3 隧道：原始数据 + 事件打点 + 判定结果（layer_type 体积小，便于离线核对）
+/livox/lidar
+/livox/imu_192_168_1_135
+/livox/imu_192_168_1_122
+/tunnel_event
+/tunnel_status
+/tunnel_status/detail
+/rog_map/layer_type
+/aft_mapped_to_init
+/tf
+/tf_static

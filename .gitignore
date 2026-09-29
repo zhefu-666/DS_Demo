@@ -1,0 +1,26 @@
+# colcon 产物
+build/
+install/
+log/
+
+# 数据：原始包、结果、地图体积大，不进 git（目录用 .gitkeep 保留）
+data/bags/*
+data/results/*
+data/maps/*
+!data/*/.gitkeep
+
+# Point-LIO / FAST-LIO 运行时输出
+src/lio/point_lio/PCD/*
+src/lio/point_lio/Log/*
+src/lio/fast_lio/PCD/*
+src/lio/fast_lio/Log/*
+*.pcd
+
+# 其他
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+compile_commands.json
+*.swp
+!src/lio/*/PCD/.gitkeep

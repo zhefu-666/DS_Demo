@@ -1,0 +1,9 @@
+# 阶段 4 HIPNUC：两路 Mid-360 IMU 一起录，便于同一份 bag 对比内置 IMU 与 HIPNUC
+/livox/lidar
+/livox/imu_192_168_1_135
+/livox/imu_192_168_1_122
+/imu/data
+/aft_mapped_to_init
+/path
+/tf
+/tf_static

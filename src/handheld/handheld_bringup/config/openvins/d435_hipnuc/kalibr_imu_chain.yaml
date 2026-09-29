@@ -1,0 +1,38 @@
+%YAML:1.0
+# HIPNUC IMU（ds_nav_imu 发布 /imu/data，单位 m/s^2、rad/s）。
+# 噪声参数为占位值：请用静置 2 小时以上的 bag 做 Allan 方差（如 allan_variance_ros），
+# 白噪声 x2、随机游走 x10 后填入（与 OpenVINS 官方做法一致）。
+imu0:
+  T_i_b:
+    - [1.0, 0.0, 0.0, 0.0]
+    - [0.0, 1.0, 0.0, 0.0]
+    - [0.0, 0.0, 1.0, 0.0]
+    - [0.0, 0.0, 0.0, 1.0]
+  accelerometer_noise_density: 0.004     # TODO Allan
+  accelerometer_random_walk: 0.0006      # TODO Allan
+  gyroscope_noise_density: 0.0004        # TODO Allan
+  gyroscope_random_walk: 0.00004         # TODO Allan
+  rostopic: /imu/data
+  time_offset: 0.0
+  update_rate: 100                       # 与 hipnuc 实际输出频率一致（ros2 topic hz /imu/data 确认）
+  model: "kalibr"
+  Tw:
+    - [ 1.0, 0.0, 0.0 ]
+    - [ 0.0, 1.0, 0.0 ]
+    - [ 0.0, 0.0, 1.0 ]
+  R_IMUtoGYRO:
+    - [ 1.0, 0.0, 0.0 ]
+    - [ 0.0, 1.0, 0.0 ]
+    - [ 0.0, 0.0, 1.0 ]
+  Ta:
+    - [ 1.0, 0.0, 0.0 ]
+    - [ 0.0, 1.0, 0.0 ]
+    - [ 0.0, 0.0, 1.0 ]
+  R_IMUtoACC:
+    - [ 1.0, 0.0, 0.0 ]
+    - [ 0.0, 1.0, 0.0 ]
+    - [ 0.0, 0.0, 1.0 ]
+  Tg:
+    - [ 0.0, 0.0, 0.0 ]
+    - [ 0.0, 0.0, 0.0 ]
+    - [ 0.0, 0.0, 0.0 ]

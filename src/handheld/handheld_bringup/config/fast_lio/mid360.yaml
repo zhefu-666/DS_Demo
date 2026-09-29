@@ -1,0 +1,59 @@
+# 阶段 1 对照：FAST-LIO2 与 Point-LIO 使用同一份原始 bag 分别回放（不要同时跑，避免互相抢 CPU 影响耗时统计）。
+# 话题：/Odometry（fastlio_odom -> fastlio_body）、/path、/cloud_registered 等。
+# odom/sensor 坐标系改名并关闭 base TF，避免与 Point-LIO 的 camera_init/body/base_link 冲突。
+# common.imu_topic 由 launch 按单雷达(livox/imu)或双雷达(livox/imu_192_168_1_135)覆盖。
+/**:
+    ros__parameters:
+        locate_in_prior_map: false
+        prior_map_path: ""
+        feature_extract_enable: false
+        point_filter_num: 3
+        max_iteration: 3
+        filter_size_surf: 0.5
+        filter_size_map: 0.5
+        cube_side_length: 1000.0
+        runtime_pos_log_enable: false
+        map_file_path: ""
+
+        common:
+            odom_frame_id: "fastlio_odom"
+            sensor_frame_id: "fastlio_body"
+            base_frame_id: "fastlio_base_link"
+            send_odom_base_tf: false
+            lid_topic: "/livox/lidar"
+            imu_topic: "livox/imu"
+            time_sync_en: false
+            time_offset_lidar_to_imu: 0.0
+
+        preprocess:
+            lidar_type: 1                # Livox CustomMsg
+            scan_line: 4
+            blind: 0.35                  # 与 Point-LIO 一致，滤掉手持者/支架
+            timestamp_unit: 3
+            scan_rate: 10
+
+        mapping:
+            acc_cov: 0.1
+            gyr_cov: 0.1
+            b_acc_cov: 0.0001
+            b_gyr_cov: 0.0001
+            fov_degree: 360.0
+            det_range: 100.0
+            extrinsic_est_en: false      # 对照实验固定外参，与 Point-LIO 相同
+            extrinsic_T: [ -0.011, -0.02329, 0.04412 ]   # Mid-360 LiDAR->内置 IMU 出厂值
+            extrinsic_R: [ 1., 0., 0.,
+                           0., 1., 0.,
+                           0., 0., 1. ]
+
+        publish:
+            path_en: true
+            effect_map_en: false
+            map_en: true
+            ikd_tree_en: false
+            scan_publish_en: true
+            dense_publish_en: true
+            scan_bodyframe_pub_en: false
+
+        pcd_save:
+            pcd_save_en: false           # 需要地图时改 true，输出到 src/lio/fast_lio/PCD/
+            interval: -1

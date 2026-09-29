@@ -1,0 +1,4 @@
+# 阶段 5：D435 只开红外双目，关闭结构光发射器（投射点会破坏 KLT 跟踪），关闭彩色与深度。
+# 通过 rs_launch.py config_file:=<本文件> 合并到节点参数；流开关/分辨率在 launch 中传入。
+depth_module.emitter_enabled: 0
+depth_module.enable_auto_exposure: true

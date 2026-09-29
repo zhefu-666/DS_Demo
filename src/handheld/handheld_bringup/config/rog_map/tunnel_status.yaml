@@ -1,0 +1,21 @@
+# 阶段 3：洞口可通行判定。ROI 为矩形，统计 /rog_map/layer_type 中各类格子占比：
+#   occupied 占比 >= blocked_occupied_ratio  -> BLOCKED
+#   否则 unknown 占比 >= unknown_ratio       -> UNKNOWN
+#   否则                                      -> PASSABLE
+# 连续 debounce_count 帧一致才切换稳定状态（layer_type 10 Hz，3 帧约 0.3 s）。
+# fixed：ROI 在 camera_init 中固定（静止放在洞口前启动，camera_init 原点即起点，x 前 y 左）；
+# body_relative：ROI 跟随机体（手持推进）。
+tunnel_status_node:
+  ros__parameters:
+    grid_topic: /rog_map/layer_type
+    odom_topic: /aft_mapped_to_init
+    roi_mode: fixed
+    roi:
+      x_min: 0.5
+      x_max: 1.5
+      y_min: -0.4
+      y_max: 0.4
+    blocked_occupied_ratio: 0.15
+    unknown_ratio: 0.50
+    debounce_count: 3
+    csv_path: ""          # 由 launch 参数 csv 覆盖

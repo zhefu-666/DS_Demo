@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>handheld_bringup</name>
+  <version>0.1.0</version>
+  <description>RoboMaster 哨兵手持感知平台：分阶段启动、ROGMap 隧道判定、评估与录包工具。</description>
+  <maintainer email="dev@example.com">DS_Demo</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>tf2_ros</depend>
+  <depend>rog_map</depend>
+  <depend>eigen</depend>
+  <depend>libpcl-all-dev</depend>
+  <depend>yaml_cpp_vendor</depend>
+
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>rclcpp_components</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>rosbag2_py</exec_depend>
+  <exec_depend>ros2bag</exec_depend>
+  <exec_depend>rosidl_runtime_py</exec_depend>
+  <exec_depend>small_point_lio</exec_depend>
+  <exec_depend>dual_lidar_calibration</exec_depend>
+  <exec_depend>livox_ros_driver2</exec_depend>
+  <exec_depend>point_lio</exec_depend>
+  <exec_depend>fast_lio</exec_depend>
+  <exec_depend>ds_nav_imu</exec_depend>
+  <exec_depend>icp_relocalization</exec_depend>
+  <exec_depend>ov_msckf</exec_depend>
+  <exec_depend>realsense2_camera</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

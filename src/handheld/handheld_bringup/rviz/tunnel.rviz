@@ -1,0 +1,191 @@
+# 阶段 3 隧道判定：固定帧 camera_init。
+# layer_type（map 灰度配色）：白=UNKNOWN(0)  浅灰=FREE(33)  深灰=PASSABLE(66)  黑=OCCUPIED(100)
+# ROI 框颜色：绿=PASSABLE  红=BLOCKED  黄=UNKNOWN；框角文字为稳定状态。
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Reference Frame: <Fixed Frame>
+      Cell Size: 1
+      Plane Cell Count: 40
+      Color: 160; 160; 164
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Show Names: true
+      Show Arrows: false
+      Marker Scale: 0.5
+    - Class: rviz_default_plugins/Odometry
+      Name: aft_mapped_to_init（当前位姿）
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /aft_mapped_to_init
+      Keep: 1
+      Position Tolerance: 0.1
+      Angle Tolerance: 0.1
+      Shape:
+        Value: Axes
+        Axes Length: 0.5
+        Axes Radius: 0.05
+      Covariance:
+        Value: false
+    - Class: rviz_default_plugins/Path
+      Name: path（轨迹）
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /path
+      Color: 25; 255; 0
+      Line Style: Lines
+      Alpha: 1
+    - Class: rviz_default_plugins/PointCloud2
+      Name: cloud_registered
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /cloud_registered
+      Style: Points
+      Size (Pixels): 2
+      Size (m): 0.03
+      Alpha: 0.5
+      Decay Time: 2
+      Position Transformer: XYZ
+      Color Transformer: Intensity
+      Use rainbow: true
+      Invert Rainbow: false
+      Autocompute Intensity Bounds: true
+    - Class: rviz_default_plugins/Map
+      Name: rog_map/layer_type（投影层类型）
+      Enabled: true
+      Topic:
+        Depth: 1
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /rog_map/layer_type
+      Update Topic:
+        Depth: 1
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /rog_map/layer_type_updates
+      Color Scheme: map
+      Alpha: 0.7
+      Draw Behind: false
+    - Class: rviz_default_plugins/PointCloud2
+      Name: rog_map/occupied（占据体素）
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /rog_map/occupied
+      Style: Points
+      Size (Pixels): 3
+      Size (m): 0.03
+      Alpha: 1.0
+      Decay Time: 0
+      Position Transformer: XYZ
+      Color Transformer: AxisColor
+      Use rainbow: true
+      Invert Rainbow: false
+      Autocompute Intensity Bounds: true
+      Axis: Z
+      Use Fixed Frame: true
+    - Class: rviz_default_plugins/PointCloud2
+      Name: rog_map/unknown
+      Enabled: false
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /rog_map/unknown
+      Style: Points
+      Size (Pixels): 1
+      Size (m): 0.03
+      Alpha: 0.3
+      Decay Time: 0
+      Position Transformer: XYZ
+      Color Transformer: FlatColor
+      Color: 120; 120; 120
+    - Class: rviz_default_plugins/PointCloud2
+      Name: rog_map/inflated_occupied
+      Enabled: false
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /rog_map/inflated_occupied
+      Style: Points
+      Size (Pixels): 2
+      Size (m): 0.03
+      Alpha: 1.0
+      Decay Time: 0
+      Position Transformer: XYZ
+      Color Transformer: FlatColor
+      Color: 255; 85; 0
+    - Class: rviz_default_plugins/MarkerArray
+      Name: rog_map/map_bound（局部地图范围）
+      Enabled: true
+      Topic:
+        Depth: 1
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /rog_map/map_bound
+    - Class: rviz_default_plugins/MarkerArray
+      Name: tunnel_status/roi（判定区域+状态）
+      Enabled: true
+      Topic:
+        Depth: 1
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /tunnel_status/roi
+  Enabled: true
+  Global Options:
+    Fixed Frame: camera_init
+    Background Color: 48; 48; 48
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+    - Class: rviz_default_plugins/PublishPoint
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 8
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Pitch: 0.8
+      Yaw: 3.9
+      Target Frame: <Fixed Frame>
+Window Geometry:
+  Height: 900
+  Width: 1500

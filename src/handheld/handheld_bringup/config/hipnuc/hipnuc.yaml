@@ -1,0 +1,20 @@
+# 阶段 4/5：HIPNUC 串口 IMU（ds_nav_imu/hipnuc_imu_node）。
+# 输出单位 m/s^2、rad/s（Point-LIO 需 acc_norm=9.81，见 point_lio/mid360_hipnuc.yaml）。
+# 串口号以实际为准：ls -l /dev/serial/by-id/ ；建议用 udev 规则固定为 /dev/hipnuc（见 README）。
+# 用户需在 dialout 组：sudo usermod -aG dialout $USER（重新登录生效）。
+hipnuc_imu_node:
+  ros__parameters:
+    serial_port: /dev/ttyUSB0
+    baudrate: 115200
+    frame_id: imu_link
+    imu_topic: /imu/data
+    mag_topic: /imu/mag
+    publish_magnetic_field: false
+    orientation_variance: 0.01
+    angular_velocity_variance: 0.01
+    linear_acceleration_variance: 0.1
+    magnetic_field_variance: 1.0e-6
+    # host_receive：主机收到帧的时间（与雷达 PTP 时间同源，但带串口延迟）；
+    # 延迟用 LI-Init / Kalibr 估计后填 timestamp_offset_sec（负值表示往前修正）。
+    timestamp_source: host_receive
+    timestamp_offset_sec: 0.0

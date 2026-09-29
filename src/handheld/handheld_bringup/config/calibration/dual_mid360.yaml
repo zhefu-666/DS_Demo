@@ -1,0 +1,46 @@
+# 阶段 2 前置：双 Mid-360 外参标定（dual_lidar_calibration）。
+# 录包：ros2 launch handheld_bringup s2_calib_record.launch.py（驱动合并关闭，分别发布两路点云与 IMU）
+# 运行：ros2 run dual_lidar_calibration calibrate --bag <bag> [--static-bag <静置bag>] \
+#         --config $(ros2 pkg prefix handheld_bringup)/share/handheld_bringup/config/calibration/dual_mid360.yaml \
+#         --output data/results/calib_<日期>
+# 退出码 0=通过，2=质量不达标，1=错误。通过后把 extrinsic.yaml 中 merge_extrinsic_back_to_front
+# 抄到 config/driver/dual_merged.yaml 与 dual_split.yaml。
+main_lidar_topic: /livox/lidar_192_168_1_135
+main_imu_topic: /livox/imu_192_168_1_135
+secondary_lidar_topic: /livox/lidar_192_168_1_122
+secondary_imu_topic: /livox/imu_192_168_1_122
+
+# [x, y, z, roll, pitch, yaw], secondary LiDAR -> main LiDAR, m/rad.
+initial_extrinsic: [0.0, 0.38, -0.05, -0.36713, 0.0, 0.0]   # 与 driver/dual_merged.yaml 当前值一致，按支架实测修改
+
+# MID360 built-in IMU axes are assumed aligned with each LiDAR unless overridden.
+main_lidar_to_imu_rpy: [0.0, 0.0, 0.0]
+secondary_lidar_to_imu_rpy: [0.0, 0.0, 0.0]
+
+sync_tolerance_ms: 5.0
+frame_stride: 5
+max_frame_pairs: 200
+minimum_accepted_frames: 8
+point_stride: 1
+
+min_range: 0.5
+max_range: 20.0
+voxel_size: 0.10
+min_angular_speed: 0.05
+stationary_gyro_threshold: 0.03
+gravity_tolerance: 1.5
+
+translation_outlier_threshold: 0.15
+rotation_outlier_threshold_rad: 0.15
+max_translation_stddev: 0.05
+max_rotation_stddev_rad: 0.03
+
+gicp:
+  max_correspondence_distance: 0.50
+  max_iterations: 64
+  transformation_epsilon: 1.0e-6
+  min_overlap_ratio: 0.30
+  min_inliers: 500
+  max_rmse: 0.15
+  max_rotation_deviation_rad: 0.20
+  max_translation_deviation: 0.50

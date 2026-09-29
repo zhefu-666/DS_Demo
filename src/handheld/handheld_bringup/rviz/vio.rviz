@@ -1,0 +1,143 @@
+# 阶段 5 OpenVINS：固定帧 global（OpenVINS 世界系，与雷达 camera_init 无 TF 关联，按方案独立评估）。
+# trackhist 为特征跟踪图（左右目拼接），用于判断红外图像是否有足够特征、跟踪是否稳定。
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Reference Frame: <Fixed Frame>
+      Cell Size: 1
+      Plane Cell Count: 40
+      Color: 160; 160; 164
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Show Names: true
+      Show Arrows: false
+      Marker Scale: 0.3
+    - Class: rviz_default_plugins/PoseWithCovariance
+      Name: poseimu（当前位姿）
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /ov_msckf/poseimu
+      Shape: Axes
+      Axes Length: 0.5
+      Axes Radius: 0.05
+      Covariance:
+        Value: false
+    - Class: rviz_default_plugins/Path
+      Name: pathimu（轨迹）
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /ov_msckf/pathimu
+      Color: 0; 200; 255
+      Line Style: Lines
+      Alpha: 1
+    - Class: rviz_default_plugins/PointCloud2
+      Name: points_msckf（MSCKF 特征点）
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /ov_msckf/points_msckf
+      Style: Points
+      Size (Pixels): 4
+      Size (m): 0.03
+      Alpha: 1.0
+      Decay Time: 0
+      Position Transformer: XYZ
+      Color Transformer: FlatColor
+      Color: 255; 255; 0
+    - Class: rviz_default_plugins/PointCloud2
+      Name: points_slam（SLAM 特征点）
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /ov_msckf/points_slam
+      Style: Points
+      Size (Pixels): 5
+      Size (m): 0.03
+      Alpha: 1.0
+      Decay Time: 0
+      Position Transformer: XYZ
+      Color Transformer: FlatColor
+      Color: 0; 255; 0
+    - Class: rviz_default_plugins/Image
+      Name: trackhist（特征跟踪）
+      Enabled: true
+      Topic:
+        Depth: 1
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /ov_msckf/trackhist
+      Normalize Range: true
+      Median window: 5
+    - Class: rviz_default_plugins/Image
+      Name: infra1（左红外）
+      Enabled: false
+      Topic:
+        Depth: 1
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /camera/camera/infra1/image_rect_raw
+      Normalize Range: true
+      Median window: 5
+    - Class: rviz_default_plugins/Image
+      Name: infra2（右红外）
+      Enabled: false
+      Topic:
+        Depth: 1
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /camera/camera/infra2/image_rect_raw
+      Normalize Range: true
+      Median window: 5
+  Enabled: true
+  Global Options:
+    Fixed Frame: global
+    Background Color: 48; 48; 48
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+    - Class: rviz_default_plugins/PublishPoint
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 10
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Pitch: 0.8
+      Yaw: 3.9
+      Target Frame: <Fixed Frame>
+Window Geometry:
+  Height: 1000
+  Width: 1700

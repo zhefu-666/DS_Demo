@@ -1,0 +1,168 @@
+# 阶段 6 重定位：固定帧 map（先验地图）。
+# 重定位收敛前 map -> camera_init 的 TF 不存在，只能看到 target_raw（地图）；
+# 收敛后 source_aligned（对齐后的当前帧）应与地图重合，cloud_registered 也会出现在 map 下。
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Reference Frame: <Fixed Frame>
+      Cell Size: 1
+      Plane Cell Count: 40
+      Color: 160; 160; 164
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Show Names: true
+      Show Arrows: false
+      Marker Scale: 0.5
+    - Class: rviz_default_plugins/PointCloud2
+      Name: target_raw（先验地图）
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /gicp_relocalization_node/debug/target_raw
+      Style: Points
+      Size (Pixels): 1
+      Size (m): 0.03
+      Alpha: 0.6
+      Decay Time: 0
+      Position Transformer: XYZ
+      Color Transformer: FlatColor
+      Color: 200; 200; 200
+    - Class: rviz_default_plugins/PointCloud2
+      Name: target_cropped（参与配准的局部地图）
+      Enabled: false
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /gicp_relocalization_node/debug/target_cropped
+      Style: Points
+      Size (Pixels): 2
+      Size (m): 0.03
+      Alpha: 1.0
+      Decay Time: 0
+      Position Transformer: XYZ
+      Color Transformer: FlatColor
+      Color: 0; 170; 255
+    - Class: rviz_default_plugins/PointCloud2
+      Name: source_aligned（对齐后的当前帧）
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /gicp_relocalization_node/debug/source_aligned
+      Style: Points
+      Size (Pixels): 3
+      Size (m): 0.03
+      Alpha: 1.0
+      Decay Time: 0
+      Position Transformer: XYZ
+      Color Transformer: FlatColor
+      Color: 255; 0; 0
+    - Class: rviz_default_plugins/PointCloud2
+      Name: source_cropped
+      Enabled: false
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /gicp_relocalization_node/debug/source_cropped
+      Style: Points
+      Size (Pixels): 2
+      Size (m): 0.03
+      Alpha: 1.0
+      Decay Time: 0
+      Position Transformer: XYZ
+      Color Transformer: FlatColor
+      Color: 255; 170; 0
+    - Class: rviz_default_plugins/PointCloud2
+      Name: cloud_registered（LIO 当前帧）
+      Enabled: false
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /cloud_registered
+      Style: Points
+      Size (Pixels): 2
+      Size (m): 0.03
+      Alpha: 1.0
+      Decay Time: 2
+      Position Transformer: XYZ
+      Color Transformer: Intensity
+      Use rainbow: true
+      Invert Rainbow: false
+      Autocompute Intensity Bounds: true
+    - Class: rviz_default_plugins/Odometry
+      Name: aft_mapped_to_init（当前位姿）
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /aft_mapped_to_init
+      Keep: 1
+      Position Tolerance: 0.1
+      Angle Tolerance: 0.1
+      Shape:
+        Value: Axes
+        Axes Length: 0.5
+        Axes Radius: 0.05
+      Covariance:
+        Value: false
+    - Class: rviz_default_plugins/Path
+      Name: path（轨迹）
+      Enabled: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /path
+      Color: 25; 255; 0
+      Line Style: Lines
+      Alpha: 1
+  Enabled: true
+  Global Options:
+    Fixed Frame: map
+    Background Color: 48; 48; 48
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+    - Class: rviz_default_plugins/PublishPoint
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 30
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Pitch: 0.8
+      Yaw: 3.9
+      Target Frame: <Fixed Frame>
+Window Geometry:
+  Height: 900
+  Width: 1500
