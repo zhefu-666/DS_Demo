@@ -366,3 +366,12 @@ NUC 上要按实物核对的内容：
 - **OpenVINS 不初始化**：先静止 1~2 s 再动；检查 `/imu/data` 频率（`update_rate`）与两路红外时间戳是否同步（`enable_sync`）。
 - **gicp 超时**：地图坐标系是否正确（建图起点）、`initial_pose` 是否接近真值、地图是否经过 `pcd_sanitize_tool`，`target_pcd_file` 必须是绝对路径（launch 已自动转换）。
 - **录包 mcap 不可用**：未装 `ros-humble-rosbag2-storage-mcap` 时自动退回 sqlite3，功能相同。
+
+### 独立双雷达软时间同步实验
+
+新增 [dual_lidar_soft_sync](src/experiments/dual_lidar_soft_sync/README.md)：
+使用 ApproximateTime 对分路 CustomMsg 做限差配对，支持模拟源、真实分路话题/rosbag、CSV 统计和三场景测试。
+输出隔离在 `/sync_compare/soft`，不改现有阶段 2 驱动/LIO 链路；硬同步实验预留独立命名空间和对比口径。
+
+双雷达原始时间戳与帧间隔检查见 [tool/README.md](tool/README.md)：
+分别统计帧间隔、时间差分位数及双向配对覆盖率，可独立用于软/硬同步实验。

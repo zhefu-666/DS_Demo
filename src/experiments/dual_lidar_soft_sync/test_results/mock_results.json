@@ -1,0 +1,71 @@
+{
+  "normal": {
+    "parameters": {
+      "mock": true,
+      "duration_s": 4.0,
+      "mock_offset_ms": 3.0,
+      "mock_jitter_ms": 1.0,
+      "max_delta_ms": 5.0,
+      "mock_drop_every": 0,
+      "csv_path": "/tmp/dual_lidar_soft_sync/normal.csv"
+    },
+    "metrics": {
+      "front_received": 349,
+      "back_received": 349,
+      "pairs": 348,
+      "front_unmatched": 1,
+      "back_unmatched": 1,
+      "pair_ratio": 0.997134670487106,
+      "abs_delta_mean_ms": 3.002013505747128,
+      "abs_delta_p95_ms": 3.98897,
+      "abs_delta_max_ms": 4.0
+    },
+    "passed": true
+  },
+  "reject": {
+    "parameters": {
+      "mock": true,
+      "duration_s": 4.0,
+      "mock_offset_ms": 5.0,
+      "mock_jitter_ms": 0.0,
+      "max_delta_ms": 1.0,
+      "mock_drop_every": 0,
+      "csv_path": "/tmp/dual_lidar_soft_sync/reject.csv"
+    },
+    "metrics": {
+      "front_received": 349,
+      "back_received": 349,
+      "pairs": 0,
+      "front_unmatched": 349,
+      "back_unmatched": 349,
+      "pair_ratio": 0.0,
+      "abs_delta_mean_ms": null,
+      "abs_delta_p95_ms": null,
+      "abs_delta_max_ms": null
+    },
+    "passed": true
+  },
+  "drop": {
+    "parameters": {
+      "mock": true,
+      "duration_s": 4.0,
+      "mock_offset_ms": 3.0,
+      "mock_jitter_ms": 1.0,
+      "max_delta_ms": 5.0,
+      "mock_drop_every": 5,
+      "csv_path": "/tmp/dual_lidar_soft_sync/drop.csv"
+    },
+    "metrics": {
+      "front_received": 349,
+      "back_received": 280,
+      "pairs": 279,
+      "front_unmatched": 70,
+      "back_unmatched": 1,
+      "pair_ratio": 0.9964285714285714,
+      "abs_delta_mean_ms": 3.0024326881720436,
+      "abs_delta_p95_ms": 3.98897,
+      "abs_delta_max_ms": 4.0
+    },
+    "passed": true
+  }
+}
