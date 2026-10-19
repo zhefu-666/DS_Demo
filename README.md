@@ -375,3 +375,11 @@ NUC 上要按实物核对的内容：
 
 双雷达原始时间戳与帧间隔检查见 [tool/README.md](tool/README.md)：
 分别统计帧间隔、时间差分位数及双向配对覆盖率，可独立用于软/硬同步实验。
+
+Dust 实机配置（`.25.100` / `.25.136`、100Hz 分路）见
+[tool/Dust配置说明.md](tool/Dust配置说明.md)，入口为
+`ros2 launch handheld_bringup dust_sync_test.launch.py`；可选 `soft_observer:=true`。
+
+双雷达驱动内合并建图入口：`ros2 launch handheld_bringup dust_dual_lio.launch.py`，
+必须传入新安装的 `merge_extrinsic`（`.100 → .136`，m/rad）；
+详见 [Dust 配置说明](tool/Dust配置说明.md)。

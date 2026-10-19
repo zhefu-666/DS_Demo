@@ -122,8 +122,8 @@ def collect(args, raw_path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--front', default='/livox/lidar_192_168_1_135')
-    parser.add_argument('--back', default='/livox/lidar_192_168_1_122')
+    parser.add_argument('--front', default='/livox/lidar_192_168_25_100')
+    parser.add_argument('--back', default='/livox/lidar_192_168_25_136')
     parser.add_argument('--message-type', default='livox_ros_driver2/msg/CustomMsg')
     parser.add_argument('--duration', type=float, default=30.)
     parser.add_argument('--tolerance-ms', type=float, default=5.)

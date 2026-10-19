@@ -65,3 +65,6 @@ python3 -m unittest discover -s tool -v
 
 支持外部启动的 rosbag 回放。工具不依赖 `/clock`，帧间隔直接读取原始 header，
 主机接收间隔会受回放速度影响，因此软/硬对比应采用相同回放倍率。
+
+当前实机默认 IP 已更新为 `.25.100` / `.25.136`。
+按 Dust 的 100Hz 配置与软/硬隔离运行方式见 [Dust配置说明.md](Dust配置说明.md)。

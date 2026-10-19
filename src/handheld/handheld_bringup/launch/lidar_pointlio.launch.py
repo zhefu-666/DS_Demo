@@ -1,10 +1,11 @@
 """核心启动：livox_ros_driver2 + Point-LIO 放在同一个 component_container_mt（进程内零拷贝）。
 
 各阶段 launch 都 include 本文件。常用参数：
-  driver          single_mid360 | dual_merged | dual_split | none（none = 回放 bag，不启动驱动）
+  driver          single_mid360 | dual_merged | dual_split | dust_dual_merged | none（none = 回放 bag，不启动驱动）
   pointlio_config config/point_lio/ 下的文件名（mid360_single.yaml / mid360_dual.yaml / mid360_hipnuc.yaml）
   lid_topic       覆盖 common.lid_topic（空 = 用配置文件）
   imu_topic       覆盖 common.imu_topic（空 = 用配置文件）
+  merge_extrinsic 副雷达到主雷达 x,y,z,roll,pitch,yaw（m/rad）；Dust 合并入口必须显式传入
   blind_center    覆盖 preprocess.blind_center，格式 "x,y,z"（空 = 用配置文件）
   save_pcd        true 时退出（Ctrl-C）写 src/lio/point_lio/PCD/scans.pcd
   use_sim_time    回放 bag 时设 true，并用 ros2 bag play --clock
@@ -12,6 +13,7 @@
 """
 
 import os
+import math
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
@@ -22,7 +24,7 @@ from launch_ros.actions import ComposableNodeContainer, Node
 from launch_ros.descriptions import ComposableNode
 from launch_ros.parameter_descriptions import ParameterFile
 
-DRIVERS = ("single_mid360", "dual_merged", "dual_split", "none")
+DRIVERS = ("single_mid360", "dual_merged", "dual_split", "dust_dual_merged", "none")
 
 
 def as_bool(value: str) -> bool:
@@ -51,6 +53,17 @@ def launch_setup(context):
     if not os.path.isfile(pointlio_config):
         raise RuntimeError(f"Point-LIO 配置不存在: {pointlio_config}")
 
+    extrinsic_text = LaunchConfiguration("merge_extrinsic").perform(context)
+    driver_overrides = {"use_sim_time": use_sim_time}
+    if driver == "dust_dual_merged" or extrinsic_text:
+        try:
+            extrinsic = [float(v.strip()) for v in extrinsic_text.split(",")]
+        except ValueError as error:
+            raise RuntimeError("merge_extrinsic 必须提供 x,y,z,roll,pitch,yaw，单位 m/rad") from error
+        if len(extrinsic) != 6 or not all(math.isfinite(v) for v in extrinsic):
+            raise RuntimeError("merge_extrinsic 必须是 6 个有限数值：副雷达 .100 -> 主雷达 .136，单位 m/rad")
+        driver_overrides["merge_extrinsic_back_to_front"] = extrinsic
+
     intra = [{"use_intra_process_comms": True}]
     nodes = []
     if driver != "none":
@@ -61,7 +74,7 @@ def launch_setup(context):
                 name="livox_driver_node",
                 parameters=[
                     ParameterFile(os.path.join(share, "config", "driver", f"{driver}.yaml"), allow_substs=True),
-                    {"use_sim_time": use_sim_time},
+                    driver_overrides,
                 ],
                 extra_arguments=intra,
             )
@@ -113,6 +126,7 @@ def launch_setup(context):
 def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument("driver", default_value="dual_merged", description="|".join(DRIVERS)),
+        DeclareLaunchArgument("merge_extrinsic", default_value="", description="副雷达到主雷达 x,y,z,roll,pitch,yaw (m/rad); Dust 合并模式必填"),
         DeclareLaunchArgument("pointlio_config", default_value="mid360_dual.yaml"),
         DeclareLaunchArgument("lid_topic", default_value=""),
         DeclareLaunchArgument("imu_topic", default_value=""),

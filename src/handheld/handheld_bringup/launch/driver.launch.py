@@ -35,6 +35,6 @@ def launch_setup(context):
 def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument("driver", default_value="dual_split",
-                              description="single_mid360 | dual_merged | dual_split"),
+                              description="single_mid360 | dual_merged | dual_split | dust_dual_split"),
         OpaqueFunction(function=launch_setup),
     ])

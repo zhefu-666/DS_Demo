@@ -30,6 +30,7 @@
   <exec_depend>small_point_lio</exec_depend>
   <exec_depend>dual_lidar_calibration</exec_depend>
   <exec_depend>livox_ros_driver2</exec_depend>
+  <exec_depend>dual_lidar_soft_sync</exec_depend>
   <exec_depend>point_lio</exec_depend>
   <exec_depend>fast_lio</exec_depend>
   <exec_depend>ds_nav_imu</exec_depend>
